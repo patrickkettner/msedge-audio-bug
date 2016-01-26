@@ -1,47 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>MS Edge has a bug with cross-frame Web Audio</title>
-	<script>
-	var context;
+  <title>MS Edge has a bug with cross-frame Web Audio</title>
+  <script>
+  var context;
 
-	function init() {
-		try {
-			window.AudioContext = window.AudioContext||window.webkitAudioContext;
-    		context = new AudioContext();
+  function init() {
+    try {
+      window.AudioContext = window.AudioContext||window.webkitAudioContext;
+        context = new AudioContext();
 
-    		playSound('/bensound-littleidea.mp3');
-		} catch (ex) {
-			console.error(ex);
-		}
-	}
+        playSound('./bensound-littleidea.mp3');
+    } catch (ex) {
+      console.error(ex);
+    }
+  }
 
-	function loadSound(url, callback) {
-		var request = new XMLHttpRequest();
-		request.open('GET', url, true);
-		request.responseType = 'arraybuffer';
+  function loadSound(url, callback) {
+    var request = new XMLHttpRequest();
+    request.open('GET', url, true);
+    request.responseType = 'arraybuffer';
 
-	  	// Decode asynchronously
-	  	request.onload = function() {
-	    	context.decodeAudioData(request.response, callback, console.error);
-	  	}
-	  	request.send();
-	}
+      // Decode asynchronously
+      request.onload = function() {
+        context.decodeAudioData(request.response, callback, console.error);
+      }
+      request.send();
+  }
 
-	function playSound(url) {
-		var source = context.createBufferSource(); // creates a sound source
-		loadSound(url, function (buffer) {
-	  		source.buffer = buffer;                    // tell the source which sound to play
-	  		source.connect(context.destination);       // connect the source to the context's destination (the speakers)
-	  		source.loop = true;
-	  		source.start(0); 
-	  	});
-	}
+  function playSound(url) {
+    var source = context.createBufferSource(); // creates a sound source
+    loadSound(url, function (buffer) {
+        source.buffer = buffer;                    // tell the source which sound to play
+        source.connect(context.destination);       // connect the source to the context's destination (the speakers)
+        source.loop = true;
+        source.start(0); 
+      });
+  }
 
-	window.addEventListener('load', init, false);
-	</script>
+  window.addEventListener('load', init, false);
+  </script>
 </head>
 <body>
-	<h1>Audio!</h1>
-</body>	
+  <h1>Audio!</h1>
+</body> 
 </html>
