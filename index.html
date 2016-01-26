@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MS Edge has a bug with cross-frame Web Audio</title>
+	<script>
+		var iframe;
+		function navAudio() {
+			if (!iframe) {
+				iframe = document.createElement('iframe');
+				iframe.src = 'audioframe.html';
+				document.body.appendChild(iframe);
+			}
+		}
+		function navNoAudio() {
+			if (iframe) {
+				document.body.removeChild(iframe);
+				iframe = null;
+			}
+		}
+	</script>
+</head>
+<body>
+	[<a href="#" onclick="navAudio()">Audio</a>] [<a href="#" onclick="navNoAudio()">No Audio</a>]
+	<script>
+		navAudio();
+	</script>
+</body>	
+</html>
